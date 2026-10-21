@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.network)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.okhttp)
