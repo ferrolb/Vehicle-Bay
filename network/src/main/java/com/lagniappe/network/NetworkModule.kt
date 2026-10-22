@@ -7,15 +7,17 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     // TODO: Replace with your actual base URL
-    private const val BASE_URL = "https://api.example.com/"
+    private const val BASE_URL = "https://api.auto.dev/"
 
     @Provides
     @Singleton
@@ -26,7 +28,19 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+    fun provideOkHttpClient(
+        @Named("vehicleApiKey") apiKey: String
+    ): OkHttpClient =
+        OkHttpClient.Builder()
+            .addInterceptor(
+                Interceptor { chain ->
+                    val request = chain.request().newBuilder()
+                        .header("Authorization", "Bearer $apiKey")
+                        .build()
+                    chain.proceed(request)
+                }
+            )
+            .build()
 
     @Provides
     @Singleton
