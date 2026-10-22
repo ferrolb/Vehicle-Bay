@@ -1,5 +1,7 @@
 package com.lagniappe.network
 
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.JsonReader
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -23,6 +25,7 @@ object NetworkModule {
     @Singleton
     fun provideMoshi(): Moshi =
         Moshi.Builder()
+            .add(StringOrNumberAdapter())
             .addLast(KotlinJsonAdapterFactory())
             .build()
 
@@ -53,4 +56,25 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+}
+
+// Custom Moshi adapter to handle fields that can be either a String or a Number
+// the vehicle API returns model as string in some cases and an int in others.
+class StringOrNumberAdapter {
+    @FromJson
+    fun fromJson(reader: JsonReader): String {
+        return when (reader.peek()) {
+            JsonReader.Token.NUMBER -> {
+                // Read as double or long, then convert to string
+                reader.nextDouble().toString()
+            }
+            JsonReader.Token.STRING -> {
+                reader.nextString()
+            }
+            else -> {
+                reader.skipValue()
+                ""
+            }
+        }
+    }
 }

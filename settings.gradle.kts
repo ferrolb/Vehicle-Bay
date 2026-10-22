@@ -28,3 +28,4 @@ rootProject.name = "VehicleBay"
 include(":app")
 include(":vehicle:data")
 include(":network")
+include(":vehicle:domain")

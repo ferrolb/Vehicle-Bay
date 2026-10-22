@@ -8,13 +8,12 @@ data class VehicleListResponse(
     val vin: String,
     val createdAt: String,
     val location: List<Double>,
-    val vehicle: VehicleDetails?,
-    val wholesaleListing: Any?,
-    val retailListing: RetailListing,
-    val history: VehicleHistory?
+    val vehicle: VehicleDetailsResponse?,
+    val retailListing: RetailListingResponse,
+    val history: VehicleHistoryResponse?
 )
 
-data class VehicleDetails(
+data class VehicleDetailsResponse(
     val baseInvoice: Int?,
     val baseMsrp: Int?,
     val bodyStyle: String,
@@ -27,7 +26,7 @@ data class VehicleDetails(
     val fuel: String,
     val interiorColor: String,
     val make: String,
-    val model: Any,
+    val model: String,
     val seats: Int,
     val series: String?,
     val squishVin: String,
@@ -40,7 +39,7 @@ data class VehicleDetails(
     val transmissionSource: String
 )
 
-data class RetailListing(
+data class RetailListingResponse(
     val carfaxUrl: String,
     val city: String,
     val cpo: Boolean,
@@ -56,7 +55,7 @@ data class RetailListing(
     val dealerId: String
 )
 
-data class VehicleHistory(
+data class VehicleHistoryResponse(
     val accidentCount: Int,
     val accidents: Boolean,
     val oneOwner: Boolean,
