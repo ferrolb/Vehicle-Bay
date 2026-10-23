@@ -16,6 +16,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     ksp(libs.hilt.compiler)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_11

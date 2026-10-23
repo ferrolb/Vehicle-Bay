@@ -11,20 +11,19 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DefaultVehicleRepository @Inject constructor(
-    // TODO: should not be injecting the service directly, we should be injecting a data source that uses the service
-    private val vehicleService: VehicleService
-) : VehicleRepository {
-    private val _vehicleList = MutableStateFlow<List<Vehicle>>(emptyList())
-    val vehicleList: StateFlow<List<Vehicle>> = _vehicleList
-    override fun getVehicleData(): Flow<List<Vehicle>> {
-        return vehicleList
+class DefaultVehicleRepository
+    @Inject
+    constructor(
+        // TODO: should not be injecting the service directly, we should be injecting a data source that uses the service
+        private val vehicleService: VehicleService,
+    ) : VehicleRepository {
+        private val _vehicleList = MutableStateFlow<List<Vehicle>>(emptyList())
+        val vehicleList: StateFlow<List<Vehicle>> = _vehicleList
+
+        override fun getVehicleData(): Flow<List<Vehicle>> = vehicleList
+
+        override suspend fun refreshVehicleData() {
+            val resultList = vehicleService.getVehicleData().data.map { it.toVehicle() }
+            _vehicleList.value = resultList
+        }
     }
-
-    override suspend fun refreshVehicleData() {
-        val resultList = vehicleService.getVehicleData().data.map { it.toVehicle() }
-        _vehicleList.value = resultList
-    }
-
-
-}
