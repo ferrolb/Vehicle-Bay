@@ -14,7 +14,8 @@ import javax.inject.Singleton
 class DefaultVehicleRepository
     @Inject
     constructor(
-        // TODO: should not be injecting the service directly, we should be injecting a data source that uses the service
+        // TODO: should not be injecting the service directly,
+        //  we should be injecting a data source that uses the service
         private val vehicleService: VehicleService,
     ) : VehicleRepository {
         private val _vehicleList = MutableStateFlow<List<Vehicle>>(emptyList())

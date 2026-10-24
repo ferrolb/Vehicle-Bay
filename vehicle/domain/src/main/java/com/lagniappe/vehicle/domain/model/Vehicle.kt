@@ -7,8 +7,9 @@ data class Vehicle(
     val location: List<Double>,
     val vehicle: VehicleDetails?,
     val retailListing: RetailListing,
-    val history: VehicleHistory?
+    val history: VehicleHistory?,
 )
+
 data class VehicleDetails(
     val baseInvoice: Int?,
     val baseMsrp: Int?,
@@ -32,7 +33,7 @@ data class VehicleDetails(
     val type: String?,
     val vin: String,
     val year: Int,
-    val transmissionSource: String
+    val transmissionSource: String,
 )
 
 data class RetailListing(
@@ -48,7 +49,7 @@ data class RetailListing(
     val used: Boolean,
     val vdp: String,
     val zip: String?,
-    val dealerId: String
+    val dealerId: String,
 )
 
 data class VehicleHistory(
@@ -56,5 +57,5 @@ data class VehicleHistory(
     val accidents: Boolean,
     val oneOwner: Boolean,
     val ownerCount: Int,
-    val usageType: String
+    val usageType: String,
 )

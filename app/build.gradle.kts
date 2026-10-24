@@ -5,6 +5,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
+}
+
+detekt {
+    config.setFrom(files(rootProject.file("config/detekt/detekt.yml")))
+    buildUponDefaultConfig = true
 }
 
 val localProperties = Properties().apply {

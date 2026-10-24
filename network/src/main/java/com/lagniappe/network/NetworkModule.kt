@@ -8,8 +8,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
 import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
@@ -24,7 +24,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideMoshi(): Moshi =
-        Moshi.Builder()
+        Moshi
+            .Builder()
             .add(StringOrNumberAdapter())
             .addLast(KotlinJsonAdapterFactory())
             .build()
@@ -32,26 +33,30 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        @Named("vehicleApiKey") apiKey: String
+        @Named("vehicleApiKey") apiKey: String,
     ): OkHttpClient =
-        OkHttpClient.Builder()
+        OkHttpClient
+            .Builder()
             .addInterceptor(
                 Interceptor { chain ->
-                    val request = chain.request().newBuilder()
-                        .header("Authorization", "Bearer $apiKey")
-                        .build()
+                    val request =
+                        chain
+                            .request()
+                            .newBuilder()
+                            .header("Authorization", "Bearer $apiKey")
+                            .build()
                     chain.proceed(request)
-                }
-            )
-            .build()
+                },
+            ).build()
 
     @Provides
     @Singleton
     fun provideRetrofit(
         moshi: Moshi,
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
     ): Retrofit =
-        Retrofit.Builder()
+        Retrofit
+            .Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -62,19 +67,20 @@ object NetworkModule {
 // the vehicle API returns model as string in some cases and an int in others.
 class StringOrNumberAdapter {
     @FromJson
-    fun fromJson(reader: JsonReader): String {
-        return when (reader.peek()) {
+    fun fromJson(reader: JsonReader): String =
+        when (reader.peek()) {
             JsonReader.Token.NUMBER -> {
                 // Read as double or long, then convert to string
                 reader.nextDouble().toString()
             }
+
             JsonReader.Token.STRING -> {
                 reader.nextString()
             }
+
             else -> {
                 reader.skipValue()
                 ""
             }
         }
-    }
 }

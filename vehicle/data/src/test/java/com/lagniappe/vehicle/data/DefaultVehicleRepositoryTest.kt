@@ -11,7 +11,6 @@ import com.lagniappe.vehicle.domain.model.RetailListing
 import com.lagniappe.vehicle.domain.model.Vehicle
 import com.lagniappe.vehicle.domain.model.VehicleDetails
 import com.lagniappe.vehicle.domain.model.VehicleHistory
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

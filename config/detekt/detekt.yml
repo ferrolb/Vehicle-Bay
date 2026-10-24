@@ -1,0 +1,10 @@
+style:
+  ForbiddenComment:
+    active: false
+naming:
+  FunctionNaming:
+    ignoreAnnotated:
+      - Composable
+complexity:
+  LongMethod:
+    allowedLines: 250
