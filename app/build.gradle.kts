@@ -63,6 +63,7 @@ android {
 dependencies {
     implementation(projects.vehicle.data)
     implementation(projects.vehicle.domain)
+    implementation(projects.vehicle.ui)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
