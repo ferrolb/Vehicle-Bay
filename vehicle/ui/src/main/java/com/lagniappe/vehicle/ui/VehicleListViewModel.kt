@@ -2,6 +2,7 @@ package com.lagniappe.vehicle.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import com.lagniappe.vehicle.domain.GetVehicles
 import com.lagniappe.vehicle.domain.RefreshVehicles
 import com.lagniappe.vehicle.domain.model.Vehicle
@@ -10,9 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@HiltViewModel
 class VehicleListViewModel
     @Inject
     constructor(

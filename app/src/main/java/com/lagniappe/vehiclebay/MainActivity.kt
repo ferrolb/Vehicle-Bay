@@ -18,6 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            // TODO: navgraph entry point
             VehicleBayTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     VehicleListScreen(modifier = Modifier.padding(innerPadding))
